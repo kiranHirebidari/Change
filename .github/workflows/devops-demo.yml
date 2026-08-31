@@ -1,4 +1,4 @@
-name: name: devops-demo.yml
+name: devops-demo.yml
 
 on:
   workflow_dispatch:
