@@ -48,7 +48,8 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Deploy to Production'
-          change-request: '{"setCloseCode":"true","autoCloseChange":true}'
+          change-request: >-
+            {"setCloseCode":"true","autoCloseChange":true,"attributes":{"short_description":"Production deployment from GitHub Actions","description":"Automated production deployment for the Change application using the devops-demo.yml pipeline.","implementation_plan":"Deploy the successfully built and tested application through GitHub Actions after ServiceNow approval.","backout_plan":"Stop the deployment and redeploy the previous stable application version.","test_plan":"Validate that the GitHub build and test jobs completed successfully before production deployment."}}
           interval: '30'
           timeout: '3600'
           changeCreationTimeOut: '300'
