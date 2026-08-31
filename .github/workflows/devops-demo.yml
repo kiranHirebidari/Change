@@ -1,0 +1,46 @@
+name: ServiceNow DevOps Demo
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          echo "Building the demo application..."
+          sleep 5
+          echo "Build completed successfully."
+
+  test:
+    name: Test Application
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run tests
+        run: |
+          echo "Running application tests..."
+          sleep 5
+          echo "All tests passed."
+
+  deploy:
+    name: Deploy to Production
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        run: |
+          echo "Deploying the application to production..."
+          sleep 5
+          echo "Deployment completed successfully."
