@@ -39,8 +39,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy
+      - name: ServiceNow Change Approval
+        id: create_change
+        uses: ServiceNow/servicenow-devops-change@v7.0.0
+        with:
+          devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'Deploy to Production'
+          change-request: '{"setCloseCode":"true","autoCloseChange":true}'
+          interval: '30'
+          timeout: '3600'
+          changeCreationTimeOut: '300'
+          abortOnChangeCreationFailure: true
+          abortOnChangeStepTimeout: true
+
+      - name: Display Change Number
         run: |
+          echo "Created change: ${{ steps.create_change.outputs.change-request-number }}"
+
+      - name: Deploy Application
+        run: |
+          echo "ServiceNow approved the change."
           echo "Deploying the application to production..."
           sleep 5
           echo "Deployment completed successfully."
