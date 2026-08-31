@@ -1,4 +1,4 @@
-name: ServiceNow DevOps Demo
+name: name: devops-demo.yml
 
 on:
   workflow_dispatch:
